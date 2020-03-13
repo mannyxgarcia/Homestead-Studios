@@ -2,24 +2,42 @@ import { createMuiTheme } from '@material-ui/core/styles';
 
 const white = '#fff';
 const arcOrange = '#FFBA60';
+const textColor = '#442c2e';
 
 export default createMuiTheme({
+  shadows: ['none'],
+  props: {
+    MuiButtonBase: {
+      disableRipple: true,
+    },
+  },
   palette: {
     common: {
       white: `${white}`,
+      black: '#fff',
       arcOrange: `${arcOrange}`,
     },
+    background: {
+      paper: '#FEEAE6',
+    },
     primary: {
-      main: `${white}`,
+      main: '#FEEAE6',
     },
     secondary: {
-      main: `${arcOrange}`,
+      main: textColor,
     },
   },
   typography: {
     h5: {
       fontWeight: 100,
-      fontFamily: 'Inconsolata',
+    },
+    h2: {
+      fontWeight: 700,
+      color: `${textColor}`,
+    },
+
+    button: {
+      textTransform: 'none',
     },
   },
 });
