@@ -146,6 +146,20 @@ export default function LandingPage() {
               </ScrollAnimation>
               <br />
               Highly Rated Designs
+              <br />
+              <Grid item style={{ marginTop: '1em' }}>
+                <ScrollAnimation animateIn='fadeIn'>
+                  <i
+                    class='fab fa-instagram fa-2x'
+                    style={{ marginRight: '1em' }}
+                  ></i>
+                  <i
+                    class='fab fa-facebook-square fa-2x'
+                    style={{ marginRight: '1em' }}
+                  ></i>
+                  <i class='fab fa-twitter-square fa-2x'></i>
+                </ScrollAnimation>
+              </Grid>
             </Paper>
           </Grid>
         </Grid>

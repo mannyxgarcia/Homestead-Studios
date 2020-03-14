@@ -6,14 +6,14 @@ export class Projects extends Component {
   state = {
     images: [],
     count: 1,
-    start: 8,
+    start: 15,
   };
 
   componentDidMount() {
     const { count, start } = this.state;
     axios
       .get(
-        `https://api.unsplash.com/search/photos&query=furniture?page=${count}&per_page=${start}&client_id=alX6pUr4-xQbO6dowqP-C38KOzTSxxV-oxCT_IDM9IA`,
+        `https://api.unsplash.com/photos?page=${count}&per_page=${start}&client_id=alX6pUr4-xQbO6dowqP-C38KOzTSxxV-oxCT_IDM9IA`,
       )
       .then(res => this.setState({ images: res.data }));
   }
@@ -23,7 +23,7 @@ export class Projects extends Component {
     this.setState({ count: this.state.count + 1 });
     axios
       .get(
-        `https://api.unsplash.com/search/photos&query=furniture?page=${count}&per_page=${start}&client_id=alX6pUr4-xQbO6dowqP-C38KOzTSxxV-oxCT_IDM9IA`,
+        `https://api.unsplash.com/photos?page=${count}&per_page=${start}&client_id=alX6pUr4-xQbO6dowqP-C38KOzTSxxV-oxCT_IDM9IA`,
       )
       .then(res =>
         this.setState({ images: this.state.images.concat(res.data) }),

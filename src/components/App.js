@@ -6,6 +6,8 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Footer from '../components/ui/Footer';
 import LandingPage from '../components/Landing';
 import Projects from '../components/Projects';
+import About from '../components/About';
+import Services from '../components/Services.js';
 
 function App() {
   return (
@@ -25,18 +27,14 @@ function App() {
             <Route exact path='/gallery' component={() => <div>Gallery</div>} />
 
             {/* Services */}
-            <Route
-              exact
-              path='/services'
-              component={() => <div>Services</div>}
-            />
+            <Route exact path='/services' component={Services} />
             <Route
               exact
               path='/estimate'
               component={() => <div>Estimate</div>}
             />
             {/* About */}
-            <Route exact path='/about' component={() => <div>About</div>} />
+            <Route exact path='/about' component={About} />
             <Route exact path='/contact' component={() => <div>Contact</div>} />
             <Route
               exact

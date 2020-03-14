@@ -35,7 +35,9 @@ export default createMuiTheme({
       fontWeight: 700,
       color: `${textColor}`,
     },
-
+    h6: {
+      fontWeight: 500,
+    },
     button: {
       textTransform: 'none',
     },
