@@ -132,7 +132,7 @@ export default function Header(props) {
           setValue(2);
         }
         break;
-      case '/about':
+      case '/contact':
         if (value !== 3) {
           setValue(3);
         }
@@ -167,8 +167,8 @@ export default function Header(props) {
         <Tab
           className={classes.tab}
           component={Link}
-          to='/about'
-          label='About'
+          to='/contact'
+          label='Contact'
         />
       </Tabs>
       {/* <Menu

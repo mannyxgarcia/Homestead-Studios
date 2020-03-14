@@ -6,7 +6,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Footer from '../components/ui/Footer';
 import LandingPage from '../components/Landing';
 import Projects from '../components/Projects';
-import About from '../components/About';
+import Contact from './Contact';
 import Services from '../components/Services.js';
 
 function App() {
@@ -33,14 +33,8 @@ function App() {
               path='/estimate'
               component={() => <div>Estimate</div>}
             />
-            {/* About */}
-            <Route exact path='/about' component={About} />
-            <Route exact path='/contact' component={() => <div>Contact</div>} />
-            <Route
-              exact
-              path='/vision'
-              component={() => <div>Our Vision</div>}
-            />
+            {/* Contact */}
+            <Route exact path='/contact' component={Contact} />
           </Switch>
           <Footer />
         </BrowserRouter>

@@ -21,6 +21,7 @@ import People3 from '../imgs/people3.svg';
 import { cloneDeep } from 'lodash';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
+import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles(theme => ({
   icon: {
@@ -34,6 +35,14 @@ const useStyles = makeStyles(theme => ({
     marginTop: '1em',
     color: 'white',
     backgroundColor: '#442c2e',
+  },
+  message: {
+    border: `2px solid`,
+    marginTop: '1em',
+    borderRadius: 5,
+  },
+  specialText: {
+    fontWeight: 700,
   },
 }));
 
@@ -88,7 +97,7 @@ const homeOrBarQuestions = [
         icon: Minimal,
         iconAlt: 'minimal',
         selected: false,
-        cost: 100,
+        cost: 0,
       },
       {
         id: 2,
@@ -97,7 +106,7 @@ const homeOrBarQuestions = [
         icon: Industrial,
         iconAlt: 'industrial',
         selected: false,
-        cost: 100,
+        cost: 0,
       },
       {
         id: 3,
@@ -106,7 +115,7 @@ const homeOrBarQuestions = [
         icon: Bohemian,
         iconAlt: 'bohemian',
         selected: false,
-        cost: 100,
+        cost: 0,
       },
     ],
     active: true,
@@ -123,7 +132,7 @@ const homeOrBarQuestions = [
         icon: Cube1,
         iconAlt: 'cube1',
         selected: false,
-        cost: 25,
+        cost: 500,
       },
       {
         id: 2,
@@ -132,7 +141,7 @@ const homeOrBarQuestions = [
         icon: Cube2,
         iconAlt: 'cube2',
         selected: false,
-        cost: 25,
+        cost: 800,
       },
       {
         id: 3,
@@ -141,7 +150,7 @@ const homeOrBarQuestions = [
         icon: Cube3,
         iconAlt: 'cube3',
         selected: false,
-        cost: 25,
+        cost: 1000,
       },
     ],
     active: false,
@@ -162,7 +171,7 @@ const eventQuestions = [
         icon: People1,
         iconAlt: 'People1',
         selected: false,
-        cost: 100,
+        cost: 200,
       },
       {
         id: 2,
@@ -171,7 +180,7 @@ const eventQuestions = [
         icon: People2,
         iconAlt: 'People2',
         selected: false,
-        cost: 200,
+        cost: 400,
       },
       {
         id: 3,
@@ -180,7 +189,7 @@ const eventQuestions = [
         icon: People3,
         iconAlt: 'People3',
         selected: false,
-        cost: 250,
+        cost: 1000,
       },
     ],
     active: true,
@@ -193,6 +202,17 @@ export default function Services() {
 
   const [questions, setQuestions] = useState(defaultQuestions);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [name, setName] = useState('');
+
+  const [email, setEmail] = useState('');
+  const [emailHelper, setEmailHelper] = useState('');
+
+  const [phone, setPhone] = useState('');
+  const [phoneHelper, setPhoneHelper] = useState('');
+
+  const [message, setMessage] = useState('');
+
+  const [total, setTotal] = useState(0);
 
   const defaultOptions = {
     loop: true,
@@ -279,6 +299,63 @@ export default function Services() {
       default:
         setQuestions(newQuestions);
     }
+  };
+
+  const onChange = event => {
+    let valid;
+
+    switch (event.target.id) {
+      case 'email':
+        setEmail(event.target.value);
+        valid = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(
+          event.target.value,
+        );
+
+        if (!valid) {
+          setEmailHelper('Invalid email');
+        } else {
+          setEmailHelper('');
+        }
+        break;
+      case 'phone':
+        setPhone(event.target.value);
+        valid = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(
+          event.target.value,
+        );
+
+        if (!valid) {
+          setPhoneHelper('Invalid phone');
+        } else {
+          setPhoneHelper('');
+        }
+        break;
+      default:
+        break;
+    }
+  };
+
+  const getTotal = () => {
+    let cost = 0;
+
+    //returns all options that are selected
+    const selections = questions
+      .map(question => question.options.filter(option => option.selected))
+      //gives you an 1 array with the options
+      .filter(question => question.length > 0);
+
+    //map over your array of selections and += your cost variable
+    selections.map(options => options.map(option => (cost += option.cost)));
+
+    //checking if the selected question what home/bar or event
+    if (questions.length > 2) {
+      //if home/bar +=200
+      cost += 200;
+    } else {
+      //if event
+      cost += 400;
+    }
+
+    setTotal(cost);
   };
 
   return (
@@ -399,21 +476,81 @@ export default function Services() {
           <Button
             variant='contained'
             className={classes.estimateButton}
-            onClick={() => setDialogOpen(true)}
+            onClick={() => {
+              setDialogOpen(true);
+              getTotal();
+            }}
           >
             Get Estimate
           </Button>
         </Grid>
       </Grid>
       <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
-        <Grid item>
-          <Typography variant='h2' align='center'>
-            Estimate
-          </Typography>
+        <Grid container justify='center'>
+          <Grid item>
+            <Typography variant='h3' align='center'>
+              Estimate
+            </Typography>
+          </Grid>
         </Grid>
         <DialogContent>
           <Grid container>
-            <Grid item container direction='column'></Grid>
+            <Grid item container direction='column'>
+              <Grid item>
+                <Typography variant='body1' paragaph>
+                  Your estimate is
+                  <span className={classes.specialText}> ${total}</span>
+                </Typography>
+                <Typography variant='body1' paragaph>
+                  Fill out your name, phone, and email, and place your request.
+                  We will contact you about the final price.
+                </Typography>
+              </Grid>
+              <Grid item style={{ marginBottom: '0.5em' }}>
+                <TextField
+                  label='Name'
+                  id='name'
+                  fullWidth
+                  value={name}
+                  onChange={event => setName(event.target.value)}
+                />
+              </Grid>
+              <Grid item style={{ marginBottom: '0.5em' }}>
+                <TextField
+                  label='Email'
+                  error={emailHelper.length !== 0}
+                  helperText={emailHelper}
+                  id='email'
+                  fullWidth
+                  value={email}
+                  onChange={onChange}
+                />
+              </Grid>
+              <Grid item style={{ marginBottom: '0.5em' }}>
+                <TextField
+                  label='Phone'
+                  helperText={phoneHelper}
+                  error={phoneHelper.length !== 0}
+                  id='phone'
+                  fullWidth
+                  value={phone}
+                  onChange={onChange}
+                />
+              </Grid>
+              <Grid item style={{ width: '20em' }}>
+                <TextField
+                  InputProps={{ disableUnderline: true }}
+                  value={message}
+                  className={classes.message}
+                  multiline
+                  fullWidth
+                  rows={10}
+                  id='message'
+                  onChange={event => setMessage(event.target.value)}
+                />
+              </Grid>
+              <Grid item></Grid>
+            </Grid>
           </Grid>
         </DialogContent>
       </Dialog>
