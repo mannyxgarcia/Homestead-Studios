@@ -42,4 +42,23 @@ export default createMuiTheme({
       textTransform: 'none',
     },
   },
+  //form overrides
+  overrides: {
+    // MuiInputLabel: {
+    //   root: {
+    //     color: '#442c2e',
+    //     fontSize: '1rem',
+    //   },
+    // },
+    MuiInput: {
+      underline: {
+        //   '&:before': {
+        //     borderBottom: '2px solid #442c2e',
+        //   },
+        '&:hover:not($disabled):not($focused):not($error):before': {
+          borderBottom: '2px solid #442c2e',
+        },
+      },
+    },
+  },
 });
