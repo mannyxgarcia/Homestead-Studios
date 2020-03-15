@@ -9,6 +9,9 @@ import Background from '../imgs/contactus1.jpg';
 import { useMediaQuery } from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
+import axios from 'axios';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import SnackBar from '@material-ui/core/Snackbar';
 
 const useStyles = makeStyles(theme => ({
   background: {
@@ -36,7 +39,6 @@ export default function Contact() {
   const classes = useStyles();
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
-  const matchesXS = useMediaQuery(theme.breakpoints.down('xs'));
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -46,6 +48,14 @@ export default function Contact() {
   const [message, setMessage] = useState('');
 
   const [open, setOpen] = useState(false);
+
+  const [loading, setLoading] = useState(false);
+
+  const [alert, setAlert] = useState({
+    open: false,
+    message: '',
+    backgroundColor: '',
+  });
 
   const onChange = event => {
     let error;
@@ -79,6 +89,49 @@ export default function Contact() {
         break;
     }
   };
+
+  const onConfirm = () => {
+    setLoading(true);
+    axios
+      .get(
+        'https://us-central1-stackathon-project.cloudfunctions.net/sendMail',
+        {
+          params: {
+            name: name,
+            email: email,
+            phone: phone,
+            message: message,
+          },
+        },
+      )
+      .then(res => {
+        setLoading(false);
+        setOpen(false);
+        setName('');
+        setEmail('');
+        setPhone('');
+        setMessage('');
+        setAlert({
+          open: true,
+          message: 'Message sent, thank you!',
+          backgroundColor: '#4BB543',
+        });
+      })
+      .catch(err => {
+        setLoading(false);
+        setAlert({
+          open: true,
+          message: 'Message was not sent. Try again.',
+          backgroundColor: '#FFF3232',
+        });
+      });
+  };
+
+  const buttonLabel = (
+    <React.Fragment>
+      Send <i class='fas fa-paper-plane'></i>
+    </React.Fragment>
+  );
 
   return (
     <Grid container direction='row'>
@@ -183,7 +236,7 @@ export default function Contact() {
                 variant='contained'
                 className={classes.sendButton}
               >
-                Send <i class='fas fa-paper-plane'></i>
+                {buttonLabel}
               </Button>
             </Grid>
             {/* DIALOG START */}
@@ -200,10 +253,12 @@ export default function Contact() {
                 },
               }}
             >
-              <DialogContent
-                style={matchesSM ? { width: '15em' } : { width: '30em' }}
-              >
-                <Grid container direction='column'>
+              <DialogContent style={matchesSM ? null : { width: '30em' }}>
+                <Grid
+                  container
+                  direction='column'
+                  style={matchesSM ? null : { width: '30em' }}
+                >
                   <Grid item>
                     <Typography variant='h5' align='center' gutterBottom>
                       Confirm Message
@@ -270,16 +325,27 @@ export default function Contact() {
                           phoneError.length !== 0 ||
                           emailError.length !== 0
                         }
-                        onClick={() => setOpen(true)}
+                        onClick={onConfirm}
                       >
-                        Send <i class='fas fa-paper-plane'></i>
+                        {buttonLabel}
                       </Button>
                     </Grid>
+                    {loading ? <CircularProgress color='secondary' /> : null}
                   </Grid>
                 </Grid>
               </DialogContent>
             </Dialog>
             {/* DIALOG END */}
+            <SnackBar
+              open={alert.open}
+              message={alert.message}
+              ContentProps={{
+                style: { backgroundColor: alert.backgroundColor },
+              }}
+              anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+              onClose={() => setAlert({ ...alert, open: false })}
+              autoHideDuration={4000}
+            />
           </Grid>
         </Grid>
       </Grid>
