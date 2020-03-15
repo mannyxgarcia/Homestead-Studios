@@ -1,52 +1,80 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-import InfiniteScroll from 'react-infinite-scroll-component';
+import React, { useState } from 'react';
+import ProjectsForm from './ProjectsForm';
+import Search from './Search';
+import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
+import ProjectsList from './ProjectsList';
 
-export class Projects extends Component {
-  state = {
-    images: [],
-    count: 1,
-    start: 15,
-  };
+const useStyles = makeStyles(theme => ({
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    backgroundColor: theme.palette.background.paper,
+  },
+  root2: {
+    flexGrow: 1,
+  },
+  gridList: {
+    width: 800,
+  },
+  contain: {
+    align: 'center',
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  },
+}));
 
-  componentDidMount() {
-    const { count, start } = this.state;
-    axios
-      .get(
-        `https://api.unsplash.com/photos?page=${count}&per_page=${start}&client_id=alX6pUr4-xQbO6dowqP-C38KOzTSxxV-oxCT_IDM9IA`,
-      )
-      .then(res => this.setState({ images: res.data }));
-  }
+function Projects() {
+  const classes = useStyles();
+  const [open, setOpen] = useState(false);
 
-  fetchImages = () => {
-    const { count, start } = this.state;
-    this.setState({ count: this.state.count + 1 });
-    axios
-      .get(
-        `https://api.unsplash.com/photos?page=${count}&per_page=${start}&client_id=alX6pUr4-xQbO6dowqP-C38KOzTSxxV-oxCT_IDM9IA`,
-      )
-      .then(res =>
-        this.setState({ images: this.state.images.concat(res.data) }),
-      );
-  };
-
-  render() {
-    console.group(this.state);
-    return (
-      <div>
-        <InfiniteScroll
-          dataLength={this.state.images.length}
-          next={this.fetchImages}
-          hasMore={true}
-          loader={<h4>Loading...</h4>}
-        >
-          {this.state.images.map(image => (
-            <img alt='pics' src={image.urls.thumb} />
-          ))}
-        </InfiniteScroll>
+  return (
+    <React.Fragment>
+      <div className={classes.root}>
+        <Grid item xs={11}>
+          <ProjectsList />
+        </Grid>
+        <Grid item xs={1}>
+          <Paper className={classes.paper}>
+            <Fab
+              onClick={() => setOpen(true)}
+              color='secondary'
+              aria-label='add'
+              size='small'
+            >
+              <AddIcon />
+            </Fab>
+          </Paper>
+        </Grid>
       </div>
-    );
-  }
+      <Dialog
+        style={{ zIndex: 302 }}
+        open={open}
+        onClose={() => setOpen(false)}
+        align='center'
+        PaperProps={{
+          style: {
+            marginTop: '4em',
+            paddingTop: '2em',
+            paddingBottom: '2em',
+          },
+        }}
+      >
+        <DialogContent>
+          <ProjectsForm />
+        </DialogContent>
+      </Dialog>
+    </React.Fragment>
+  );
 }
 
 export default Projects;

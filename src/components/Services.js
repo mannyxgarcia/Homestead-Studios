@@ -22,6 +22,9 @@ import { cloneDeep } from 'lodash';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import TextField from '@material-ui/core/TextField';
+import axios from 'axios';
+import SnackBar from '@material-ui/core/Snackbar';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles(theme => ({
   icon: {
@@ -203,19 +206,20 @@ export default function Services() {
   const [questions, setQuestions] = useState(defaultQuestions);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [name, setName] = useState('');
-
   const [email, setEmail] = useState('');
-  const [emailHelper, setEmailHelper] = useState('');
-
+  const [emailError, setEmailError] = useState('');
   const [phone, setPhone] = useState('');
-  const [phoneHelper, setPhoneHelper] = useState('');
-
+  const [phoneError, setPhoneError] = useState('');
   const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const [alert, setAlert] = useState({ open: false, color: '' });
+  const [alertMessage, setAlertMesssage] = useState('');
 
   const [total, setTotal] = useState(0);
 
   const defaultOptions = {
-    loop: true,
+    loop: false,
     autoplay: false,
     animationData: BuildingsAnimation,
     rendererSettings: {
@@ -312,9 +316,9 @@ export default function Services() {
         );
 
         if (!valid) {
-          setEmailHelper('Invalid email');
+          setEmailError('Invalid email');
         } else {
-          setEmailHelper('');
+          setEmailError('');
         }
         break;
       case 'phone':
@@ -324,9 +328,9 @@ export default function Services() {
         );
 
         if (!valid) {
-          setPhoneHelper('Invalid phone');
+          setPhoneError('Invalid phone');
         } else {
-          setPhoneHelper('');
+          setPhoneError('');
         }
         break;
       default:
@@ -356,6 +360,34 @@ export default function Services() {
     }
 
     setTotal(cost);
+  };
+
+  const sendEstimate = () => {
+    setLoading(true);
+    axios
+      .get(
+        'https://us-central1-stackathon-project.cloudfunctions.net/sendMail',
+        {
+          params: {
+            email: email,
+            name: name,
+            phone: phone,
+            message: message,
+          },
+        },
+      )
+      .then(res => {
+        setLoading(false);
+        setAlert({ open: true, color: '#4BB543' });
+        setAlertMesssage('Message sent successfully!');
+        setDialogOpen(false);
+      })
+      .catch(err => {
+        setLoading(false);
+        setAlert({ open: true, color: '#FF3232' });
+        setAlertMesssage('Something went wrong! Please try again.');
+        console.error(err);
+      });
   };
 
   return (
@@ -485,7 +517,17 @@ export default function Services() {
           </Button>
         </Grid>
       </Grid>
-      <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
+      <Dialog
+        style={{ zIndex: 302 }}
+        PaperProps={{
+          style: {
+            marginTop: '4em',
+          },
+        }}
+        open={dialogOpen}
+        onClose={() => setDialogOpen(false)}
+        align='center'
+      >
         <Grid container justify='center'>
           <Grid item>
             <Typography variant='h3' align='center'>
@@ -518,8 +560,8 @@ export default function Services() {
               <Grid item style={{ marginBottom: '0.5em' }}>
                 <TextField
                   label='Email'
-                  error={emailHelper.length !== 0}
-                  helperText={emailHelper}
+                  error={emailError.length !== 0}
+                  helperText={emailError}
                   id='email'
                   fullWidth
                   value={email}
@@ -529,31 +571,70 @@ export default function Services() {
               <Grid item style={{ marginBottom: '0.5em' }}>
                 <TextField
                   label='Phone'
-                  helperText={phoneHelper}
-                  error={phoneHelper.length !== 0}
+                  helperText={phoneError}
+                  error={phoneError.length !== 0}
                   id='phone'
                   fullWidth
                   value={phone}
                   onChange={onChange}
                 />
               </Grid>
-              <Grid item style={{ width: '20em' }}>
+              <Grid item>
                 <TextField
                   InputProps={{ disableUnderline: true }}
                   value={message}
                   className={classes.message}
                   multiline
                   fullWidth
-                  rows={10}
+                  rows={6}
                   id='message'
                   onChange={event => setMessage(event.target.value)}
                 />
               </Grid>
-              <Grid item></Grid>
+              <Grid item>
+                {loading ? (
+                  <CircularProgress color='secondary' />
+                ) : (
+                  <Button
+                    variant='contained'
+                    className={classes.estimateButton}
+                    onClick={sendEstimate}
+                    disabled={
+                      name.length === 0 ||
+                      message.length === 0 ||
+                      phoneError.length !== 0 ||
+                      emailError.length !== 0
+                    }
+                  >
+                    Send <i class='fas fa-paper-plane'></i>
+                  </Button>
+                )}
+              </Grid>
+              <Grid item>
+                <Button
+                  align='center'
+                  color='secondary'
+                  onClick={() => setDialogOpen(false)}
+                >
+                  Cancel
+                </Button>
+              </Grid>
             </Grid>
           </Grid>
         </DialogContent>
       </Dialog>
+      <SnackBar
+        open={alert.open}
+        ContentProps={{
+          style: {
+            backgroundColor: alert.color,
+          },
+        }}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        message={alertMessage}
+        autoHideDuration={4000}
+        onClose={() => setAlert(false)}
+      />
     </Grid>
   );
 }
