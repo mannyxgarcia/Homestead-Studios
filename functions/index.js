@@ -15,10 +15,7 @@ let transporter = nodemailer.createTransport({
 });
 
 let mailOptions = {
-  from: 'ME',
-  to: 'mannyalgarcia@gmail.com',
-  subject: 'Testing nodemailer',
-  text: 'Text Successful',
+  from: 'Manny',
 };
 
 // Create and Deploy Your First Cloud Functions
@@ -26,6 +23,20 @@ let mailOptions = {
 
 exports.sendMail = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
+    const { name, email, phone, message } = request.query;
+
+    mailOptions = {
+      ...mailOptions,
+      to: 'mannyalgarcia@gmail.com',
+      subject: 'Message received!',
+      html: `
+      <p style="font-size=16px">From: ${name}</p>
+      <p style="font-size=16px">Email: ${email}</p>
+      <p style="font-size=16px">Phone: ${phone}</p>
+      <p style="font-size=16px">Message: ${message}</p>
+      `,
+    };
+
     transporter.sendMail(mailOptions, error => {
       if (error) {
         response.send(error);
@@ -33,5 +44,21 @@ exports.sendMail = functions.https.onRequest((request, response) => {
         response.send('Message sent succesfully');
       }
     });
+
+    mailOptions = {
+      ...mailOptions,
+      to: email,
+      subject: 'Autoreply: Message Recieved',
+      html: `
+      
+      <p style="font-size=16px">We will get back to you as soon as possible!</p>
+      <p style="font-size=16px">Here is a copy of your message:</p>
+      <p style="font-size=16px">From: ${name}</p>
+      <p style="font-size=16px">Email: ${email}</p>
+      <p style="font-size=16px">Phone: ${phone}</p>
+      <p style="font-size=16px">Message: ${message}</p>
+      `,
+    };
+    transporter.sendMail(mailOptions);
   });
 });
