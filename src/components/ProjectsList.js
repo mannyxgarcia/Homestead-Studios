@@ -3,6 +3,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import GridList from '@material-ui/core/GridList';
+import { v4 as uuidv4 } from 'uuid';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -74,18 +75,19 @@ const tileData = [
 
 const IngredientList = props => {
   const classes = useStyles();
-
+  console.log('PROJECTS', props.projects);
   return (
     <React.Fragment>
       <Paper className={classes.paper}>
         <div className={classes.root}>
           <GridList cellHeight={300} className={classes.gridList} cols={3}>
-            {tileData.map(tile => (
-              <GridListTile
-                key={tile.img}
-                cols={tile.cols || Math.floor(Math.random() * 3)}
-              >
-                <img src={tile.img} alt={tile.title} />
+            {props.projects.map(tile => (
+              <GridListTile key={tile.id} cols={tile.col}>
+                <img
+                  src={tile.imgUrl}
+                  alt={tile.id}
+                  onClick={props.onRemoveItem.bind(this, tile.id)}
+                />
               </GridListTile>
             ))}
           </GridList>
