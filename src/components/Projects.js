@@ -54,7 +54,7 @@ const Projects = () => {
             description: responseData[key].description,
           });
         }
-        setAllProjects(loadedProjects);
+        setAllProjects(loadedProjects.reverse());
       });
   }, []);
 
@@ -76,9 +76,13 @@ const Projects = () => {
   };
 
   const removeProjectHandler = id => {
-    setAllProjects(prevProjects =>
-      prevProjects.filter(project => project.id !== id),
-    );
+    fetch(`https://homestead-studios.firebaseio.com/projects/${id}.json`, {
+      method: 'DELETE',
+    }).then(response => {
+      setAllProjects(prevProjects =>
+        prevProjects.filter(project => project.id !== id),
+      );
+    });
   };
 
   const closeDialog = () => {
