@@ -11,6 +11,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import ProjectsList from './ProjectsList';
 import Typography from '@material-ui/core/Typography';
 import SingleProject from './SingleProject';
+import InfoIcon from '@material-ui/icons/Info';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -42,6 +43,8 @@ const Projects = () => {
   const [open2, setOpen2] = useState(false);
   const [allProjects, setAllProjects] = useState([]);
   const [singleProject, setSingleProject] = useState([]);
+  const [onDelete, setDelete] = useState(false);
+  const [getInfo, setGetInfo] = useState(false);
 
   useEffect(() => {
     fetch('https://homestead-studios.firebaseio.com/projects.json')
@@ -109,6 +112,8 @@ const Projects = () => {
             onRemoveItem={removeProjectHandler}
             open2={openDialog}
             selectProject={selectProject}
+            onDelete={onDelete}
+            getInfo={getInfo}
           />
         </Grid>
         <Grid item xs={1}>
@@ -120,6 +125,33 @@ const Projects = () => {
               size='small'
             >
               <AddIcon />
+            </Fab>
+          </Paper>
+          <Paper className={classes.paper}>
+            <Fab
+              onClick={() => {
+                !onDelete ? setDelete(true) : setDelete(false);
+                setGetInfo(true);
+              }}
+              color='secondary'
+              aria-label='add'
+              size='small'
+            >
+              <i class='fas fa-minus'></i>
+            </Fab>
+          </Paper>
+
+          <Paper className={classes.paper}>
+            <Fab
+              onClick={() => {
+                !getInfo ? setGetInfo(true) : setGetInfo(false);
+                setDelete(false);
+              }}
+              color='secondary'
+              aria-label='add'
+              size='small'
+            >
+              <i class='fas fa-info'></i>
             </Fab>
           </Paper>
         </Grid>

@@ -4,12 +4,16 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import GridList from '@material-ui/core/GridList';
 import { v4 as uuidv4 } from 'uuid';
+import GridListTileBar from '@material-ui/core/GridListTileBar';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'space-around',
+    overflow: 'hidden',
     backgroundColor: theme.palette.background.paper,
   },
   root2: {
@@ -26,55 +30,14 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'center',
     color: theme.palette.text.secondary,
   },
+  icon: {
+    color: 'rgba(255, 255, 255, 0.54)',
+  },
 }));
 
-const tileData = [
-  {
-    img:
-      'https://images.unsplash.com/photo-1584140828577-933ad5f0c57f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
-    title: 'Image',
-    description: 'author1',
-    cols: 1,
-  },
-  {
-    img:
-      'https://images.unsplash.com/photo-1553949312-1b37019c1c15?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
-    title: 'Image2',
-    description: 'author2',
-    cols: 2,
-  },
-  {
-    img:
-      'https://images.unsplash.com/photo-1531302871984-ca996367b319?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
-    title: 'Image3',
-    description: 'author3',
-    cols: 2,
-  },
-  {
-    img:
-      'https://images.unsplash.com/photo-1542646010-5652de93bc83?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
-    title: 'Image4',
-    description: 'author4',
-    cols: 1,
-  },
-  {
-    img:
-      'https://images.unsplash.com/photo-1583344575570-20f4aef19843?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
-    title: 'Image5',
-    description: 'author5',
-    cols: 3,
-  },
-  {
-    img:
-      'https://images.unsplash.com/photo-1550684376-cafcd6096e61?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
-    title: 'Image6',
-    description: 'author6',
-    cols: 1,
-  },
-];
-
-const IngredientList = props => {
+const ProjectsList = props => {
   const classes = useStyles();
+  console.log(props);
   return (
     <React.Fragment>
       <Paper className={classes.paper}>
@@ -89,8 +52,25 @@ const IngredientList = props => {
                     props.open2();
                     props.selectProject(index);
                   }}
-                  // onClick={props.onRemoveItem.bind(this, tile.id)}
                 />
+
+                {props.getInfo ? (
+                  <GridListTileBar
+                    title={tile.title}
+                    subtitle={<span>{tile.description}</span>}
+                    actionIcon={
+                      props.onDelete ? (
+                        <IconButton
+                          aria-label={`info about ${tile.description}`}
+                          className={classes.icon}
+                          onClick={() => props.onRemoveItem(tile.id)}
+                        >
+                          <DeleteForeverIcon />
+                        </IconButton>
+                      ) : null
+                    }
+                  />
+                ) : null}
               </GridListTile>
             ))}
           </GridList>
@@ -100,4 +80,4 @@ const IngredientList = props => {
   );
 };
 
-export default IngredientList;
+export default ProjectsList;
