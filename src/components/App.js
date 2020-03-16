@@ -1,8 +1,8 @@
 import React from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/styles';
 import theme from './ui/Theme';
 import Header from '../components/ui/Header';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Footer from '../components/ui/Footer';
 import LandingPage from '../components/Landing';
 import Projects from '../components/Projects';
@@ -19,13 +19,6 @@ function App() {
             <Route exact path='/' component={LandingPage} />
             {/* Projects */}
             <Route exact path='/projects' component={Projects} />
-            <Route
-              exact
-              path='/showcase'
-              component={() => <div>Showcase</div>}
-            />
-            <Route exact path='/gallery' component={() => <div>Gallery</div>} />
-
             {/* Services */}
             <Route exact path='/services' component={Services} />
             <Route
