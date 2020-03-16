@@ -30,7 +30,7 @@ I gotta be honest, I hated it at first. I almost abandoned this library multiple
 
 I wanted to create a functioning contact us page that would easily send emails. Google cloud functions is great for this type of thing! I set up the function to email me directly, hooked it up with node mailer...and Tada! a functioning contact form.
 
-![Alt Text](https://media.giphy.com/media/kz1HbLkftHVC0M3mPz/giphy.gif)
+![Alt Text](https://media.giphy.com/media/kaCBHFaZQq2io5dyWC/giphy.gif)
 
 `Firebase`
 
