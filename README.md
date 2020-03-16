@@ -20,7 +20,7 @@ The stack taught at Fullstack Academy is react, redux, node.js, express, and seq
 
 Wow! This is truly the future of React. ✨React Hooks!✨ What can I say?...I'm 'hooked'! No class functions?? no componentDidMount?? No redux?? Managing state has never been so flexible! It was a rough start understanding how to manage state with hooks, but it all came together in my Projects section. I was able to create some beautiful and seamless transitions from adding, deleting, viewing, and paginating through images. Of course this also worked stunningly well with Material UI. There has never been a more perfect match 💍.
 
-![Alt Text](https://gph.is/g/E1WOj1r)
+![Alt Text](https://media.giphy.com/media/YkJDC239w9w8vWZmtC/giphy.gif)
 
 `Material Ui`
 
