@@ -69,8 +69,8 @@ const useStyles = makeStyles(theme => ({
 export default function Header(props) {
   const classes = useStyles();
   const theme = useTheme();
-  const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
   const matches = useMediaQuery(theme.breakpoints.down('sm'));
+  // const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
   const [value, setValue] = useState(0);
 
   const handleChange = (e, newValue) => {

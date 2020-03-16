@@ -3,7 +3,6 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import GridList from '@material-ui/core/GridList';
-import { v4 as uuidv4 } from 'uuid';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
@@ -37,7 +36,6 @@ const useStyles = makeStyles(theme => ({
 
 const ProjectsList = props => {
   const classes = useStyles();
-  console.log(props);
   return (
     <React.Fragment>
       <Paper className={classes.paper}>

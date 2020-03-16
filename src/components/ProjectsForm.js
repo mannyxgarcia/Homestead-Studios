@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -30,7 +30,6 @@ const useStyles = makeStyles(theme => ({
 
 const ProjectForm = React.memo(props => {
   const classes = useStyles();
-  const theme = useTheme();
 
   const [imgUrl, setImgUrl] = useState('');
   const [col, setCol] = useState('');

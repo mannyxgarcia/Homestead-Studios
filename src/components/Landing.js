@@ -1,15 +1,14 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { Parallax } from 'react-parallax';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
-import { Link } from 'react-router-dom';
-import Container from '@material-ui/core';
 import Typist from 'react-typist';
+import ScrollAnimation from 'react-animate-on-scroll';
 import 'react-typist/dist/Typist.css';
 import 'animate.css/animate.min.css';
-import ScrollAnimation from 'react-animate-on-scroll';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -127,11 +126,8 @@ export default function LandingPage() {
 
       <Parallax
         bgImage={require('../imgs/mitch-moondae-zXFtsdi9dIc-unsplash.jpg')}
-        // blur={{ min: -1, max: 3 }}
       >
-        <div style={{ height: 500 }}>
-          {/* <div style={insideStyles}>Dynamic Blur</div> */}
-        </div>
+        <div style={{ height: 500 }} />
       </Parallax>
       <div className={classes.root}>
         <Grid container spacing={1} className={classes.container}>

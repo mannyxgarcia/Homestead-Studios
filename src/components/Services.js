@@ -1,11 +1,19 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import { cloneDeep } from 'lodash';
+import { makeStyles } from '@material-ui/core/styles';
 import Lottie from 'react-lottie';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import BuildingsAnimation from '../../src/imgs/2519-maps.json';
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
+import TextField from '@material-ui/core/TextField';
+import SnackBar from '@material-ui/core/Snackbar';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 import Home from '../imgs/home.svg';
 import Bar from '../imgs/bar.svg';
 import Event from '../imgs/event.svg';
@@ -18,13 +26,6 @@ import Cube3 from '../imgs/cube3.svg';
 import People1 from '../imgs/people1.svg';
 import People2 from '../imgs/people2.svg';
 import People3 from '../imgs/people3.svg';
-import { cloneDeep } from 'lodash';
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
-import TextField from '@material-ui/core/TextField';
-import axios from 'axios';
-import SnackBar from '@material-ui/core/Snackbar';
-import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles(theme => ({
   icon: {
@@ -201,7 +202,6 @@ const eventQuestions = [
 
 export default function Services() {
   const classes = useStyles();
-  const theme = useTheme();
 
   const [questions, setQuestions] = useState(defaultQuestions);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -344,7 +344,7 @@ export default function Services() {
     //returns all options that are selected
     const selections = questions
       .map(question => question.options.filter(option => option.selected))
-      //gives you an 1 array with the options
+      //gives you 1 array with the options
       .filter(question => question.length > 0);
 
     //map over your array of selections and += your cost variable

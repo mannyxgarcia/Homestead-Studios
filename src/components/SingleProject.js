@@ -1,21 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import Grid from '@material-ui/core/Grid';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import IconButton from '@material-ui/core/IconButton';
 
 const useStyles = makeStyles(theme => ({
-  // img: {
-  //   height: '80vh',
-  //   objectFit: 'cover',
-  //   // maxHeight: '50%',
-  // },
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    // justifyContent: 'space-around',
-    // backgroundColor: theme.palette.background.paper,
   },
 }));
 

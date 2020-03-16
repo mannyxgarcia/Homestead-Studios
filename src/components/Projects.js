@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import ProjectsForm from './ProjectsForm';
-import Search from './Search';
+import ProjectsList from './ProjectsList';
+import SingleProject from './SingleProject';
 import { makeStyles } from '@material-ui/core/styles';
+import ProjectsForm from './ProjectsForm';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
-import ProjectsList from './ProjectsList';
-import Typography from '@material-ui/core/Typography';
-import SingleProject from './SingleProject';
-import InfoIcon from '@material-ui/icons/Info';
 
 const useStyles = makeStyles(theme => ({
   root: {
