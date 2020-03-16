@@ -75,18 +75,21 @@ const tileData = [
 
 const IngredientList = props => {
   const classes = useStyles();
-  console.log('PROJECTS', props.projects);
   return (
     <React.Fragment>
       <Paper className={classes.paper}>
         <div className={classes.root}>
           <GridList cellHeight={300} className={classes.gridList} cols={3}>
-            {props.projects.map(tile => (
+            {props.projects.map((tile, index) => (
               <GridListTile key={tile.id} cols={tile.col}>
                 <img
                   src={tile.imgUrl}
                   alt={tile.id}
-                  onClick={props.onRemoveItem.bind(this, tile.id)}
+                  onClick={() => {
+                    props.open2();
+                    props.selectProject(index);
+                  }}
+                  // onClick={props.onRemoveItem.bind(this, tile.id)}
                 />
               </GridListTile>
             ))}

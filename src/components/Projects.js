@@ -9,7 +9,8 @@ import AddIcon from '@material-ui/icons/Add';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import ProjectsList from './ProjectsList';
-import { v4 as uuidv4 } from 'uuid';
+import Typography from '@material-ui/core/Typography';
+import SingleProject from './SingleProject';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -38,7 +39,9 @@ const Projects = () => {
   const classes = useStyles();
 
   const [open, setOpen] = useState(false);
+  const [open2, setOpen2] = useState(false);
   const [allProjects, setAllProjects] = useState([]);
+  const [singleProject, setSingleProject] = useState([]);
 
   useEffect(() => {
     fetch('https://homestead-studios.firebaseio.com/projects.json')
@@ -89,6 +92,14 @@ const Projects = () => {
     setOpen(false);
   };
 
+  const openDialog = () => {
+    setOpen2(true);
+  };
+
+  const selectProject = index => {
+    setSingleProject(index);
+  };
+
   return (
     <React.Fragment>
       <div className={classes.root}>
@@ -96,6 +107,8 @@ const Projects = () => {
           <ProjectsList
             projects={allProjects}
             onRemoveItem={removeProjectHandler}
+            open2={openDialog}
+            selectProject={selectProject}
           />
         </Grid>
         <Grid item xs={1}>
@@ -129,6 +142,22 @@ const Projects = () => {
             onAddProject={addProjectHandler}
             setOpen={closeDialog}
           />
+        </DialogContent>
+      </Dialog>
+      <Dialog
+        style={{ zIndex: 302 }}
+        open={open2}
+        onClose={() => setOpen2(false)}
+        align='center'
+        PaperProps={{
+          style: {
+            maxHeight: '100%',
+            maxWidth: '100%',
+          },
+        }}
+      >
+        <DialogContent>
+          <SingleProject projects={allProjects} singleProject={singleProject} />
         </DialogContent>
       </Dialog>
     </React.Fragment>
