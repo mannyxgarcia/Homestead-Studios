@@ -99,7 +99,7 @@ export default function LandingPage() {
                   className={classes.estimateButton}
                   disable
                   component={Link}
-                  to='/about'
+                  to='/services'
                   variant='outlined'
                 >
                   Free Estimate
