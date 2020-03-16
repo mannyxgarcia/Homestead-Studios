@@ -18,7 +18,7 @@ The stack taught at Fullstack Academy is react, redux, node.js, express, and seq
 
 `React (React Hooks)`
 
-Wow! This is truly the future of React. ✨React Hooks!✨ No class functions?? no componentDidMount?? No redux?? Managing state has never been so flexible! It was a rough start at first switching over my way prior way of managing state, but it all came together in my Projects section. I was able to create some beautiful and seamless transitions from adding, deleting, viewing, and paginating through images. Of course this also worked stunningly well with Material UI. There has never been a more perfect match 💍.
+Wow! This is truly the future of React. ✨React Hooks!✨ What can I say?...I'm 'hooked'! No class functions?? no componentDidMount?? No redux?? Managing state has never been so flexible! It was a rough start understanding how to manage state with hooks, but it all came together in my Projects section. I was able to create some beautiful and seamless transitions from adding, deleting, viewing, and paginating through images. Of course this also worked stunningly well with Material UI. There has never been a more perfect match 💍.
 
 ![Alt Text](https://media.giphy.com/media/YkJDC239w9w8vWZmtC/giphy.gif)
 
@@ -32,6 +32,12 @@ I wanted to create a functioning contact us page that would easily send emails. 
 
 ![Alt Text](https://media.giphy.com/media/kz1HbLkftHVC0M3mPz/giphy.gif)
 
+`Firebase`
+
+Super fast and easy to setup. I didn't get to authenticate through firebase though. So I had to turn off 'writing' to firebase. I'm currently on the 'free' plan so disabling writing to firebase ensures people don't send a million post requests === \$\$\$\$. I didn't get too deep into all that firebase has to offer, I simply setup POST and GET requests. I would love to explore more! Firestore is the newest Firebase feature, and it seems promising!
+
+![Alt Text](https://media.giphy.com/media/QUMIdjBb37uOvudW0A/giphy.gif)
+
 ## Getting Started
 
 `npm install`
@@ -39,9 +45,3 @@ I wanted to create a functioning contact us page that would easily send emails. 
 `npm start`
 
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-https://images.unsplash.com/photo-1555314064-b3bf3354eedb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1504&q=80
-
-https://images.unsplash.com/photo-1580136607993-fd598cf5c4f5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1346&q=80
-
-https://images.unsplash.com/photo-1519710164239-da123dc03ef4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60
