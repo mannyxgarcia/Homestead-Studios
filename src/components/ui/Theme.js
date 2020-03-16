@@ -1,7 +1,6 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 
 const white = '#fff';
-const arcOrange = '#FFBA60';
 const textColor = '#442c2e';
 
 export default createMuiTheme({
@@ -15,7 +14,6 @@ export default createMuiTheme({
     common: {
       white: `${white}`,
       black: '#fff',
-      arcOrange: `${arcOrange}`,
     },
     background: {
       paper: '#FEEAE6',
